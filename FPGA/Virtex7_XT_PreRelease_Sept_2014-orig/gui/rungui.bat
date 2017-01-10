@@ -1,0 +1,1 @@
+java -Djava.library.path=./gui/jnilib/win -jar gui/XilinxGUI.jar

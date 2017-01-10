@@ -1,0 +1,166 @@
+/*******************************************************************************
+** © Copyright 2012 - 2013 Xilinx, Inc. All rights reserved.
+** This file contains confidential and proprietary information of Xilinx, Inc. and 
+** is protected under U.S. and international copyright and other intellectual property laws.
+*******************************************************************************
+**   ____  ____ 
+**  /   /\/   / 
+** /___/  \  /   Vendor: Xilinx 
+** \   \   \/    
+**  \   \
+**  /   /          
+** /___/    \
+** \   \  /  \   Kintex-7 PCIe-DMA-DDR3-10GMAC-10GBASER Targeted Reference Design
+**  \___\/\___\
+** 
+**  Device: xc7k325t
+**  Version: 1.0
+**  Reference: UG927
+**     
+*******************************************************************************
+**
+**  Disclaimer: 
+**
+**    This disclaimer is not a license and does not grant any rights to the materials 
+**    distributed herewith. Except as otherwise provided in a valid license issued to you 
+**    by Xilinx, and to the maximum extent permitted by applicable law: 
+**    (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL FAULTS, 
+**    AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, 
+**    INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, OR 
+**    FITNESS FOR ANY PARTICULAR PURPOSE; and (2) Xilinx shall not be liable (whether in contract 
+**    or tort, including negligence, or under any other theory of liability) for any loss or damage 
+**    of any kind or nature related to, arising under or in connection with these materials, 
+**    including for any direct, or any indirect, special, incidental, or consequential loss 
+**    or damage (including loss of data, profits, goodwill, or any type of loss or damage suffered 
+**    as a result of any action brought by a third party) even if such damage or loss was 
+**    reasonably foreseeable or Xilinx had been advised of the possibility of the same.
+
+
+**  Critical Applications:
+**
+**    Xilinx products are not designed or intended to be fail-safe, or for use in any application 
+**    requiring fail-safe performance, such as life-support or safety devices or systems, 
+**    Class III medical devices, nuclear facilities, applications related to the deployment of airbags,
+**    or any other applications that could lead to death, personal injury, or severe property or 
+**    environmental damage (individually and collectively, "Critical Applications"). Customer assumes 
+**    the sole risk and liability of any use of Xilinx products in Critical Applications, subject only 
+**    to applicable laws and regulations governing limitations on product liability.
+
+**  THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE AT ALL TIMES.
+
+*******************************************************************************/
+/*****************************************************************************/
+/**
+*
+* @file XBlock.rc
+*
+*
+* MODIFICATION HISTORY:
+*
+* Ver     Date   Changes
+* ----- -------- -------------------------------------------------------
+* 1.0   06/08/13 First release 
+*
+******************************************************************************/
+
+/***************************** Include Files *********************************/
+// Microsoft Visual C++ generated resource script.
+//
+#include "..\..\Include\resource.h"
+#include "..\..\Include\version.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION VER_MAJOR_NUM,VER_MINOR_NUM,VER_SUBMINOR_NUM,VER_BUILD_NUM
+ PRODUCTVERSION VER_MAJOR_NUM,VER_MINOR_NUM,VER_SUBMINOR_NUM,VER_BUILD_NUM
+ FILEFLAGSMASK 0x3fL
+
+#ifdef _DEBUG
+ FILEFLAGS 0x9L
+#else
+ FILEFLAGS 0x8L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x3L
+ FILESUBTYPE 0x7L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+            VALUE "CompanyName", VER_COMPANYNAME_STR
+            VALUE "FileDescription", "Xilinx TRD XDMA XBlock Driver"
+            VALUE "FileVersion", VER_PRODUCTVERSION_STR
+            VALUE "InternalName", "XBlock.sys"
+            VALUE "LegalCopyright", VER_LEGALCOPYRIGHT_STR
+            VALUE "OriginalFilename", "XBlock.sys"
+            VALUE "ProductName", "Xilinx TRD XDMA XBlock Driver"
+            VALUE "ProductVersion", VER_PRODUCTVERSION_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "..\..\Include\resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,15 @@
+﻿Build started 15/01/2015 10:53:17.
+     1>Project "P:\SVN\DMA\X7\VC709DMA\VC709DMA.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I..\DriverMgr\Include /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt DMATransfer.cpp
+         DMATransfer.cpp
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\Lib.exe /OUT:"P:\SVN\DMA\X7\x64\Debug\VC709DMA.lib" /NOLOGO /MACHINE:X64 x64\Debug\DMATransfer.obj
+         x64\Debug\DriverInfoGen.obj
+         x64\Debug\stdafx.obj
+         VC709DMA.vcxproj -> P:\SVN\DMA\X7\x64\Debug\VC709DMA.lib
+     1>Done Building Project "P:\SVN\DMA\X7\VC709DMA\VC709DMA.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.60

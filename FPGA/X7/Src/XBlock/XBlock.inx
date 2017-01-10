@@ -1,0 +1,162 @@
+;/* $Id: */
+;/*******************************************************************************
+;** © Copyright 2012 Xilinx, Inc. All rights reserved.
+;** This file contains confidential and proprietary information of Xilinx, Inc. and 
+;** is protected under U.S. and international copyright and other intellectual property laws.
+;*******************************************************************************
+;**   ____  ____ 
+;**  /   /\/   / 
+;** /___/  \  /   Vendor: Xilinx 
+;** \   \   \/    
+;**  \   \        
+;**  /   /          
+;** /___/   /\     
+;** \   \  /  \
+;**  \___\/\___\ 
+;** 
+;*******************************************************************************
+;**
+;**  Disclaimer: 
+;**
+;**    This disclaimer is not a license and does not grant any rights to the materials 
+;**    distributed herewith. Except as otherwise provided in a valid license issued to you 
+;**    by Xilinx, and to the maximum extent permitted by applicable law: 
+;**    (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL FAULTS, 
+;**    AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, 
+;**    INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, OR 
+;**    FITNESS FOR ANY PARTICULAR PURPOSE; and (2) Xilinx shall not be liable (whether in contract 
+;**    or tort, including negligence, or under any other theory of liability) for any loss or damage 
+;**    of any kind or nature related to, arising under or in connection with these materials, 
+;**    including for any direct, or any indirect, special, incidental, or consequential loss 
+;**    or damage (including loss of data, profits, goodwill, or any type of loss or damage suffered 
+;**    as a result of any action brought by a third party) even if such damage or loss was 
+;**    reasonably foreseeable or Xilinx had been advised of the possibility of the same.
+;**
+;**  Critical Applications:
+;**
+;**    Xilinx products are not designed or intended to be fail-safe, or for use in any application 
+;**    requiring fail-safe performance, such as life-support or safety devices or systems, 
+;**    Class III medical devices, nuclear facilities, applications related to the deployment of airbags,
+;**    or any other applications that could lead to death, personal injury, or severe property or 
+;**    environmental damage (individually and collectively, "Critical Applications"). Customer assumes 
+;**    the sole risk and liability of any use of Xilinx products in Critical Applications, subject only 
+;**    to applicable laws and regulations governing limitations on product liability.
+;**
+;**  THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE AT ALL TIMES.
+;**
+;*******************************************************************************/
+;/*++
+;
+;Module Name:
+;
+;    XBlock.INF
+;
+;Abstract:
+;    INF file for the Xilinx XDMA XBlock driver.
+;
+;--*/
+
+[Version]
+Signature="$WINDOWS NT$"
+;Class=Multifunction
+;ClassGuid={4d36e971-e325-11ce-bfc1-08002be10318}
+Class=Xilinx
+ClassGuid={99FB84E5-3F33-4A8C-A8C8-2C7E20B27527}
+Provider=%XLX%
+DriverVer=06/05/2013,1.02.0000
+CatalogFile.NTx86=XBlockx86.cat
+CatalogFile.NTAMD64=XBlockx64.cat
+DriverPackageDisplayName=%ClassName%
+;
+;  If you are using InstallShield to install the drivers,
+;  uncomment the following line when creating the InstallShield package.
+;  After the InstallShield project has been created for this driver, comment this line 
+;  out otherwise the driver will not install correctly.
+;
+;DriverPackageType=PlugAndPlay
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=XBlockClassReg
+
+[XBlockClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,0
+HKR,,DeviceCharacteristics,0x10001,0x100                 ;Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)(A;;GA;;;LS)" ;Allow generic all access to system, built-in Admin, and Local System.
+                                                         ;This one overrides the security set by the driver
+
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[Manufacturer]
+%XLX%=XLX,NT$ARCH$
+
+[SourceDisksFiles]
+XBlock.sys=1
+
+[SourceDisksNames]
+1=%DISK_NAME%,
+
+; For XP and later
+[XLX.NT$ARCH$]
+; DisplayName           Section           DeviceId
+; -----------           -------           --------
+%XBlock.DRVDESC%=       XBlock_Inst,      XDMA_V7\XBLOCK
+
+[XBlock_Inst.NT]
+CopyFiles=XBlock.CopyFiles
+
+[XBlock.CopyFiles]
+XBlock.sys
+
+;-------------- Service installation
+
+[XBlock_Inst.NT.Services]
+AddService = XBLOCK, %SPSVCINST_ASSOCSERVICE%, XBlock_Service
+
+[XBlock_Service]
+DisplayName    = %XBLOCK.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\XBlock.sys
+LoadOrderGroup = Extended Base
+
+;-------------- Coinstaller installation
+[DestinationDirs]
+CoInstaller_CopyFiles = 11
+
+[XBlock_Inst.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[SourceDisksFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+XBlock.sys=1
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[XBlock_Inst.NT.Wdf]
+KmdfService = XBLOCK, XBLOCK_wdfsect
+[XBlock_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+XLX = "Xilinx, Inc."
+ClassName = "Xilinx V7 XBlock Function Driver"
+XBlock.SVCDESC = "Driver Service for Xilinx V7 Block Driver"
+XBlock.DRVDESC = "Xilinx V7 Block Driver Device"
+DISK_NAME = "Xilinx V7 Installation Disk #1"
+

@@ -1,0 +1,202 @@
+;/* $Id: */
+;/*******************************************************************************
+;** © Copyright 2012 Xilinx, Inc. All rights reserved.
+;** This file contains confidential and proprietary information of Xilinx, Inc. and 
+;** is protected under U.S. and international copyright and other intellectual property laws.
+;*******************************************************************************
+;**   ____  ____ 
+;**  /   /\/   / 
+;** /___/  \  /   Vendor: Xilinx 
+;** \   \   \/    
+;**  \   \        
+;**  /   /          
+;** /___/   /\     
+;** \   \  /  \
+;**  \___\/\___\ 
+;** 
+;*******************************************************************************
+;**
+;**  Disclaimer: 
+;**
+;**    This disclaimer is not a license and does not grant any rights to the materials 
+;**    distributed herewith. Except as otherwise provided in a valid license issued to you 
+;**    by Xilinx, and to the maximum extent permitted by applicable law: 
+;**    (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL FAULTS, 
+;**    AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, 
+;**    INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, OR 
+;**    FITNESS FOR ANY PARTICULAR PURPOSE; and (2) Xilinx shall not be liable (whether in contract 
+;**    or tort, including negligence, or under any other theory of liability) for any loss or damage 
+;**    of any kind or nature related to, arising under or in connection with these materials, 
+;**    including for any direct, or any indirect, special, incidental, or consequential loss 
+;**    or damage (including loss of data, profits, goodwill, or any type of loss or damage suffered 
+;**    as a result of any action brought by a third party) even if such damage or loss was 
+;**    reasonably foreseeable or Xilinx had been advised of the possibility of the same.
+;**
+;**  Critical Applications:
+;**
+;**    Xilinx products are not designed or intended to be fail-safe, or for use in any application 
+;**    requiring fail-safe performance, such as life-support or safety devices or systems, 
+;**    Class III medical devices, nuclear facilities, applications related to the deployment of airbags,
+;**    or any other applications that could lead to death, personal injury, or severe property or 
+;**    environmental damage (individually and collectively, "Critical Applications"). Customer assumes 
+;**    the sole risk and liability of any use of Xilinx products in Critical Applications, subject only 
+;**    to applicable laws and regulations governing limitations on product liability.
+;**
+;**  THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE AT ALL TIMES.
+;**
+;*******************************************************************************/
+;/*++
+;
+;Module Name:
+;
+;    XDMA.INF
+;
+;Abstract:
+;    INF file for the Xilinx XDMA driver.
+;
+;--*/
+
+[Version]
+Signature="$WINDOWS NT$"
+;Class=Multifunction
+;ClassGuid={4d36e971-e325-11ce-bfc1-08002be10318}
+Class=Xilinx
+ClassGuid={99FB84E5-3F33-4A8C-A8C8-2C7E20B27527}
+Provider=%XLX%
+DriverVer=06/5/2013,1.02.0000
+CatalogFile.NTx86=XDMAx86.cat
+CatalogFile.NTAMD64=XDMAx64.cat
+DriverPackageType=PlugAndPlay
+DriverPackageDisplayName=%ClassName%
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=XDMAClassReg     
+
+[XDMAClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+HKR,,DeviceCharacteristics,0x10001,0x100     ;Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)" ;Allow generic all access to system and built-in Admin. 
+
+
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[Manufacturer]
+%XLX%=XLX,NT$ARCH$
+
+[SourceDisksFiles]
+XDMA.sys=1
+
+
+[SourceDisksNames]
+1=%DISK_NAME%,
+
+; For XP and later
+[XLX.NT$ARCH$]
+; DisplayName           Section           DeviceId
+; -----------           -------           --------
+%XDMA.DRVDESC%=      	XDMA_Inst,     	PCI\VEN_10EE&DEV_7083
+
+[XDMA_Inst.NT]
+CopyFiles=XDMA.CopyFiles
+
+[XDMA.CopyFiles]
+XDMA.sys
+
+;-------------- Service installation
+
+[XDMA_Inst.NT.Services]
+AddService=XDMA,0x00000002,XDMA_Service 
+
+[XDMA_Service]
+DisplayName    = %XDMA.SVCDESC%                            
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\XDMA.sys                            
+
+;-------------- Coinstaller installation
+[DestinationDirs]
+CoInstaller_CopyFiles = 11
+
+[XDMA_Inst.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[SourceDisksFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+XDMA.sys=1
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[XDMA_Inst.NT.HW]
+AddReg = XDMAInst_MSI_AddReg
+AddReg = XDMAInst_ChildDriver_AddReg
+AddReg = XDMAInst_RawEthernet_AddReg
+AddReg = XDMAInst_TestConfig_AddReg
+
+[XDMAInst_MSI_AddReg]
+HKR, Interrupt Management,, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties,, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported, 0x00010001, 1
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MessageNumberLimit, 0x00010001, 8
+HKR, Interrupt Management\Affinity Policy, DevicePriority, 0x00010001, 3
+
+[XDMAInst_ChildDriver_AddReg]
+; "Child Driver Configuration"
+; 0 = "XBlock & XNet"
+; 1	= "XBlock Only"
+; 2	= "2 XNet"
+; 3	= "4 XNet"
+; 4	= "4 XBlock"
+; 5	= "1 XBlock"
+;HKR,, ChildDriverConfig, 0x00010001, 2
+;HKR,, ChildDriverConfig, 0x00010001, 1
+;HKR,, ChildDriverConfig, 0x00010001, 0
+;HKR,, ChildDriverConfig, 0x00010001, 3
+;HKR,, ChildDriverConfig, 0x00010001, 4
+HKR,, ChildDriverConfig, 0x00010001, 5
+
+[XDMAInst_RawEthernet_AddReg]
+; "Raw Ethernet Mode"
+; 0 = "Performance Mode"
+; 1	= "Raw Ethernet Mode"
+HKR,, RawEthernet, 0x00010001, 0
+
+[XDMAInst_TestConfig_AddReg]
+; "Test Configuration"
+; 0 = "Use Application to do data transfers"
+; 1	= "Use Internal XDMA buffers to transfer data"
+HKR,, TestConfig, 0x00010001, 0
+
+[XDMA_Inst.NT.Wdf]
+KmdfService = XDMA, XDMA_wdfsect
+[XDMA_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+XLX = "Xilinx, Inc."
+ClassName = "Xilinx PCI Express Device"
+XDMA.SVCDESC = "Driver Service for the Xilinx V7 XDMA adapter"
+XDMA.DRVDESC = "Xilinx V7 XDMA adapter"
+DISK_NAME = "Xilinx V7 Installation Disk #1"
+
+ConfigHdr	= "Child Driver Configuration"
+Config0		= "XBlock & XNet"
+Config1		= "XBlock Only"
+Config2		= "2 XNet"
+Config3		= "4 XNet"
+Config4		= "4 XBlock"
+Config5		= "1 XBlock"

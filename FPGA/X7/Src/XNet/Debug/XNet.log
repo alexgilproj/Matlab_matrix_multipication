@@ -1,0 +1,8 @@
+﻿Build started 10/01/2015 20:26:11.
+     1>Project "P:\SVN\DMA\X7\Src\XNet\XNet.vcxproj" on node 2 (Clean target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.MakeFile.Targets(32,5): warning MSB8005: The property 'NMakeCleanCommandLine' doesn't exist.  Skipping...
+     1>Done Building Project "P:\SVN\DMA\X7\Src\XNet\XNet.vcxproj" (Clean target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.02
